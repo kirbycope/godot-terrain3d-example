@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Terrain3D Example"
-run/main_scene="uid://diujrfhsvhsn8"
+run/main_scene="uid://b21ys6djyp78q"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

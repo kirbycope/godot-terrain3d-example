@@ -1,19 +1,30 @@
-[gd_scene load_steps=12 format=3 uid="uid://diujrfhsvhsn8"]
+[gd_scene load_steps=22 format=3 uid="uid://b21ys6djyp78q"]
 
 [ext_resource type="PackedScene" uid="uid://ujh51l2wv1vk" path="res://addons/3d_player_controller/player_3d.tscn" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://dy2cxrla7juh3" path="res://assets/DaySkyHDRI042A_1K-TONEMAPPED.jpg" id="1_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://ckivuprfu6cnw" path="res://textures/ground037_packed_albedo_height.png" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dqjt7m1fpsgai" path="res://scenes/stones.tscn" id="2_tefeu"]
+[ext_resource type="Texture2D" uid="uid://b44fogjaq1pyo" path="res://textures/ground037_packed_normal_roughness.png" id="3_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://clwi0srhcdi2m" path="res://assets/grass.png" id="4_85g3d"]
+[ext_resource type="Texture2D" uid="uid://c0coiqsrvjjor" path="res://textures/ground069_packed_albedo_height.png" id="4_tbgi4"]
+[ext_resource type="Shader" uid="uid://bouihrrxoivmo" path="res://scenes/grass.gdshader" id="4_tipki"]
+[ext_resource type="Texture2D" uid="uid://g7t57upybilh" path="res://textures/ground069_packed_normal_roughness.png" id="5_tefeu"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipki"]
+panorama = ExtResource("1_o6xl0")
 
 [sub_resource type="Sky" id="Sky_0wfyh"]
-sky_material = SubResource("ProceduralSkyMaterial_o5qli")
+sky_material = SubResource("PanoramaSkyMaterial_tipki")
 
 [sub_resource type="Environment" id="Environment_sugp2"]
 background_mode = 2
 sky = SubResource("Sky_0wfyh")
-tonemap_mode = 2
+tonemap_mode = 4
 glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.756863, 0.752941, 0.666667, 1)
+fog_light_energy = 0.5
+fog_sky_affect = 0.9
 
 [sub_resource type="Gradient" id="Gradient_sgp6g"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -50,35 +61,63 @@ _shader_parameters = {
 &"noise_texture": SubResource("NoiseTexture2D_0wfyh"),
 &"vertex_normals_distance": 128.0
 }
-show_checkered = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyhfs"]
-transparency = 4
-cull_mode = 2
-vertex_color_use_as_albedo = true
-backlight_enabled = true
-backlight = Color(0.5, 0.5, 0.5, 1)
-distance_fade_mode = 1
-distance_fade_min_distance = 85.0
-distance_fade_max_distance = 75.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
+render_priority = 0
+shader = ExtResource("4_tipki")
+shader_parameter/texture_albedo = ExtResource("4_85g3d")
+shader_parameter/sway_speed = 1.0
+shader_parameter/sway_strength = 0.1
+shader_parameter/sway_phase_offset = 1.2
+shader_parameter/wind_direction = Vector2(1, 0.5)
+shader_parameter/tint_color = Color(0.756863, 0.752941, 0.666667, 1)
+shader_parameter/tint_strength = 1.0
+shader_parameter/exposure = 3.0
+shader_parameter/saturation = 1.0
+shader_parameter/ambient_occlusion = 0.5
 
-[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_tbgi4"]
-material_override = SubResource("StandardMaterial3D_jyhfs")
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_eb6dy"]
+name = "Grass"
+cast_shadows = 0
+material_override = SubResource("ShaderMaterial_85g3d")
 generated_type = 1
+generated_size = Vector2(0.8, 0.8)
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_tbgi4"]
+name = "Ground037"
+albedo_texture = ExtResource("2_sugp2")
+normal_texture = ExtResource("3_jyhfs")
+uv_scale = 0.2
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_o6xl0"]
+name = "Ground069"
+id = 1
+albedo_texture = ExtResource("4_tbgi4")
+normal_texture = ExtResource("5_tefeu")
+uv_scale = 0.2
 
 [sub_resource type="Terrain3DAssets" id="Terrain3DAssets_tefeu"]
-mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_tbgi4")])
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_eb6dy")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_tbgi4"), SubResource("Terrain3DTextureAsset_o6xl0")])
 
 [node name="Main" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(0.588235, 0.564706, 0.47451, 1)
+light_energy = 0.5
+light_indirect_energy = 0.5
+light_volumetric_fog_energy = 0.5
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sugp2")
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
+transform = Transform3D(-0.125887, 0, -0.992045, 0, 1, 0, 0.992045, 0, -0.125887, -31.3316, 0.13709, -5.03378)
+
+[node name="Stones" parent="." instance=ExtResource("2_tefeu")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Terrain3D" type="Terrain3D" parent="."]
 data_directory = "res://data"

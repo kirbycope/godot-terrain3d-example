@@ -1,0 +1,11 @@
+Model Information:
+* title:	SketchUp Residency Title Stonehenge
+* source:	https://sketchfab.com/3d-models/sketchup-residency-title-stonehenge-b045d1987a2e44388a9c1431fe6db55e
+* author:	SKETCHUP RESIDENCY (https://sketchfab.com/UALSID)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "SketchUp Residency Title Stonehenge" (https://sketchfab.com/3d-models/sketchup-residency-title-stonehenge-b045d1987a2e44388a9c1431fe6db55e) by SKETCHUP RESIDENCY (https://sketchfab.com/UALSID) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

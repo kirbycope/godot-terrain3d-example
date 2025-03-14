@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b21ys6djyp78q"]
+[gd_scene load_steps=23 format=3 uid="uid://b21ys6djyp78q"]
 
 [ext_resource type="PackedScene" uid="uid://ujh51l2wv1vk" path="res://addons/3d_player_controller/player_3d.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://dy2cxrla7juh3" path="res://assets/DaySkyHDRI042A_1K-TONEMAPPED.jpg" id="1_o6xl0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dqjt7m1fpsgai" path="res://scenes/stones.tscn" id="2_tefeu"]
 [ext_resource type="Texture2D" uid="uid://b44fogjaq1pyo" path="res://textures/ground037_packed_normal_roughness.png" id="3_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://clwi0srhcdi2m" path="res://assets/grass.png" id="4_85g3d"]
+[ext_resource type="Shader" uid="uid://b0m2v5dd7ugtd" path="res://scenes/terrain_override.gdshader" id="4_choun"]
 [ext_resource type="Texture2D" uid="uid://c0coiqsrvjjor" path="res://textures/ground069_packed_albedo_height.png" id="4_tbgi4"]
 [ext_resource type="Shader" uid="uid://bouihrrxoivmo" path="res://scenes/grass.gdshader" id="4_tipki"]
 [ext_resource type="Texture2D" uid="uid://g7t57upybilh" path="res://textures/ground069_packed_normal_roughness.png" id="5_tefeu"]
@@ -26,11 +27,11 @@ fog_light_color = Color(0.756863, 0.752941, 0.666667, 1)
 fog_light_energy = 0.5
 fog_sky_affect = 0.9
 
-[sub_resource type="Gradient" id="Gradient_sgp6g"]
+[sub_resource type="Gradient" id="Gradient_choun"]
 offsets = PackedFloat32Array(0.2, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_o5qli"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ya4ey"]
 noise_type = 2
 frequency = 0.03
 cellular_jitter = 3.0
@@ -42,14 +43,22 @@ domain_warp_fractal_type = 2
 domain_warp_fractal_lacunarity = 1.5
 domain_warp_fractal_gain = 1.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0wfyh"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eb6dy"]
 seamless = true
-color_ramp = SubResource("Gradient_sgp6g")
-noise = SubResource("FastNoiseLite_o5qli")
+color_ramp = SubResource("Gradient_choun")
+noise = SubResource("FastNoiseLite_ya4ey")
 
 [sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_sugp2"]
 _shader_parameters = {
+&"auto_base_texture": null,
+&"auto_height_reduction": null,
+&"auto_overlay_texture": null,
+&"auto_slope": null,
 &"blend_sharpness": 0.87,
+&"dual_scale_far": null,
+&"dual_scale_near": null,
+&"dual_scale_reduction": null,
+&"dual_scale_texture": null,
 &"height_blending": true,
 &"macro_variation1": Color(1, 1, 1, 1),
 &"macro_variation2": Color(1, 1, 1, 1),
@@ -58,9 +67,19 @@ _shader_parameters = {
 &"noise1_scale": 0.04,
 &"noise2_scale": 0.076,
 &"noise3_scale": 0.225,
-&"noise_texture": SubResource("NoiseTexture2D_0wfyh"),
-&"vertex_normals_distance": 128.0
+&"noise_texture": SubResource("NoiseTexture2D_eb6dy"),
+&"tri_scale_reduction": null,
+&"vertex_normals_distance": null,
+&"world_noise_height": null,
+&"world_noise_lod_distance": null,
+&"world_noise_max_octaves": null,
+&"world_noise_min_octaves": null,
+&"world_noise_offset": null,
+&"world_noise_region_blend": null,
+&"world_noise_scale": null
 }
+shader_override_enabled = true
+shader_override = ExtResource("4_choun")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
 render_priority = 0
@@ -78,10 +97,15 @@ shader_parameter/ambient_occlusion = 0.5
 
 [sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_eb6dy"]
 name = "Grass"
+generated_type = 1
+height_offset = 0.5
 cast_shadows = 0
 material_override = SubResource("ShaderMaterial_85g3d")
-generated_type = 1
 generated_size = Vector2(0.8, 0.8)
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+visibility_range = 128.0
 
 [sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_tbgi4"]
 name = "Ground037"

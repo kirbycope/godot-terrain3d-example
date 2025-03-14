@@ -44,3 +44,51 @@ https://www.youtube.com/watch?v=m69C59tUbbw&t=220s
 
 ## Models
 - [SketchUp Residency Title Stonehenge](https://sketchfab.com/3d-models/sketchup-residency-title-stonehenge-b045d1987a2e44388a9c1431fe6db55e) - SKETCHUP RESIDENCY
+
+----
+
+## Compatibility (Experimental)
+</br>https://github.com/TokisanGames/Terrain3D/issues/502
+</br>https://terrain3d.readthedocs.io/en/stable/docs/nightly_builds.html
+
+### Build the Web Export Profile
+This scection is no longer needed as "Unthreaded Web builds and terrain.gdextension updates have now been included in the main branch CI."
+<strike>
+1. Open Command Prompt
+1. Install SCons build tool, by running `pip install SCons`
+	- Verify, by running `python -m SCons --version`
+1. Navigate to [Godot Web Builds](https://github.com/godotengine/godot/blob/master/.github/workflows/web_builds.yml) and note the "EM_VERSION"
+1. To clone Emscripten, run `git clone https://github.com/emscripten-core/emsdk.git`
+1. Switch to the new directory, by runnning `cd emsdk`
+1. Install the correct SDK version, by running `emsdk install 3.1.64`
+1. To activate the SDK version, run `emsdk activate 3.1.64`
+1. Setup the environment, by running `emsdk_env.bat`
+1. To clone Terrain3D, run `git clone https://github.com/TokisanGames/Terrain3D.git`
+1. Navigate to your project directory, by running `cd Terrain3D`
+1. Terrain3D uses a git submodule
+	1. To activate, run `git submodule init`
+	1. To clone, run `git submodule update`
+1. To build, run `python -m SCons platform=web target=template_debug threads=no`
+1. Confirm build output, by running `dir project\addons\terrain_3d\bin\*.wasm`
+1. Open [terrain.gdextension](addons\terrain_3d\terrain.gdextension) in your project
+	- Add the following contents:
+		> web.debug = "res://addons/terrain_3d/bin/libterrain.web.debug.wasm32.wasm"
+		web.release = "res://addons/terrain_3d/bin/libterrain.web.release.wasm32.wasm"
+1. Copy the "libterrain.web.release.wasm32.wasm" (generated above) to your project's "addons/terrain_3d/bin" directory
+</strike>
+
+### Get the Terrain3D Nightly Build
+1. Navigate to the Terrain3D [Build All](https://github.com/TokisanGames/Terrain3D/actions/workflows/build.yml?query=branch%3Amain) GitHub Action
+1. Select the latest successful job and download the artifact
+1. Replace your project's [addons/terrain_3d](/addons/terrain_3d/) with the contents of the zip file
+1. Copy the "libterrain.web.release.wasm32.wasm" (generated above) to your project's "addons/terrain_3d/bin" directory
+1. Open _this_ project in Godot
+1. Set the Render mode to Compatability and restart Godot
+1. Select the "Terrain3D"
+1. In the Inspector expand "Material"
+1. Check "Shader Override Enabled"
+1. Create a New Shader and add the following [working shader](https://github.com/user-attachments/files/17241271/working_shader.txt)
+
+### Exporting
+1. Navigate to `%APPDATA%/Godot/export_templates/4.4.stable` and locate "web_dlink_nothreads_debug.zip"
+1. Select "Editor" > "Manage Templates"

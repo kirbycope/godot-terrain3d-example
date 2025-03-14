@@ -1,3 +1,5 @@
+# Copyright © 2025 Cory Petkovsek, Roope Palmroos, and Contributors.
+# Tool settings bar for Terrain3D
 extends PanelContainer
 
 signal picking(type, callback)
@@ -171,6 +173,8 @@ func _ready() -> void:
 								"unit":"γ", "range":Vector3(0.1, 2.0, 0.01) })
 	add_setting({ "name":"jitter", "type":SettingType.SLIDER, "list":advanced_list, "default":50, 
 								"unit":"%", "range":Vector3(0, 100, 1) })
+	add_setting({ "name":"crosshair_threshold", "type":SettingType.SLIDER, "list":advanced_list, "default":16., 
+								"unit":"m", "range":Vector3(0, 200, 1) })
 
 
 func create_submenu(p_parent: Control, p_button_name: String, p_layout: Layout, p_hover_pop: bool = true) -> Container:
@@ -443,7 +447,7 @@ func add_setting(p_args: Dictionary) -> void:
 			pending_children.push_back(option)
 			control = option
 
-		SettingType.SLIDER, SettingType.DOUBLE_SLIDER:			
+		SettingType.SLIDER, SettingType.DOUBLE_SLIDER:
 			var slider: Control
 			if p_type == SettingType.SLIDER:
 				# Create an editable value box
@@ -473,7 +477,7 @@ func add_setting(p_args: Dictionary) -> void:
 			else: # DOUBLE_SLIDER
 				var label := Label.new()
 				label.set_custom_minimum_size(Vector2(60, 0))
-				label.set_horizontal_alignment(HORIZONTAL_ALIGNMENT_RIGHT)
+				label.set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER)
 				slider = DoubleSlider.new()
 				slider.label = label
 				slider.suffix = p_suffix

@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0coiqsrvjjor"
-path.s3tc="res://.godot/imported/ground069_packed_albedo_height.png-55426daf556a0efbc36678a746e4707f.s3tc.ctex"
+path="res://.godot/imported/ground069_packed_albedo_height.png-55426daf556a0efbc36678a746e4707f.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://textures/ground069_packed_albedo_height.png"
-dest_files=["res://.godot/imported/ground069_packed_albedo_height.png-55426daf556a0efbc36678a746e4707f.s3tc.ctex"]
+dest_files=["res://.godot/imported/ground069_packed_albedo_height.png-55426daf556a0efbc36678a746e4707f.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

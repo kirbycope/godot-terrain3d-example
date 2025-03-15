@@ -83,9 +83,18 @@ This scection is no longer needed as "Unthreaded Web builds and terrain.gdextens
 1. Replace your project's [addons/terrain_3d](/addons/terrain_3d/) with the contents of the zip file
 1. Copy the "libterrain.web.release.wasm32.wasm" (generated above) to your project's "addons/terrain_3d/bin" directory
 1. Open _this_ project in Godot
-1. Set the Render mode to Compatability and restart Godot
-1. Select the "Terrain3D"
-1. In the Inspector expand "Material"
+1. Set the Render mode (at the top-right) to Compatability and restart Godot
+
+### Reimporting Textures
+1. Select "Import" (tab next to "Scene")
+1. In the FileSystem, select your [packed] texture
+1. Set "Compress" > "Mode" to "VRAM Uncompressed
+1. Select "Reimport(*)"
+1. Repeat for each texture
+
+### Setting the Shader
+1. In the Scene tree, select the "Terrain3D"
+1. In the Inspector, expand "Material"
 1. Check "Shader Override Enabled"
 1. Create a New Shader and add the following [working shader](https://github.com/user-attachments/files/17241271/working_shader.txt)
 

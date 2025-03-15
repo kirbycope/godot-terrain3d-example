@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://g7t57upybilh"
-path.s3tc="res://.godot/imported/ground069_packed_normal_roughness.png-dee15d265ae0e739d4b77b636b10ea47.s3tc.ctex"
+path="res://.godot/imported/ground069_packed_normal_roughness.png-dee15d265ae0e739d4b77b636b10ea47.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://textures/ground069_packed_normal_roughness.png"
-dest_files=["res://.godot/imported/ground069_packed_normal_roughness.png-dee15d265ae0e739d4b77b636b10ea47.s3tc.ctex"]
+dest_files=["res://.godot/imported/ground069_packed_normal_roughness.png-dee15d265ae0e739d4b77b636b10ea47.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

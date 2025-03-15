@@ -162,7 +162,7 @@ float hashf(float f) {
 }
 
 float hashv2(vec2 v) {
-	return fract(1e4 * sin(17.0 * v.x + v.y * 0.1) * (0.1 + abs(sin(v.y * 13.0 + v.x))));
+	return fract(1e4 * sin(fma(17.0, v.x, v.y * 0.1)) * (0.1 + abs(sin(fma(v.y, 13.0, v.x)))));
 }
 
 // https://iquilezles.org/articles/morenoise/
@@ -313,14 +313,12 @@ vec3 get_normal(vec2 uv, out vec3 tangent, out vec3 binormal) {
 }
 
 vec3 unpack_normal(vec4 rgba) {
-	vec3 n = rgba.xzy * 2.0 - vec3(1.0);
-	n.z *= -1.0;
+	vec3 n = fma(rgba.xzy, vec3(2.0, 2.0, -2.0), vec3(-1.0, -1.0, 1.0));
 	return n;
 }
 
 vec4 pack_normal(vec3 n, float a) {
-	n.z *= -1.0;
-	return vec4((n.xzy + vec3(1.0)) * 0.5, a);
+	return vec4(fma(n.xzy, vec3(0.5, -0.5, 0.5), vec3(0.5)), a);
 }
 
 float random(in vec2 xy) {
@@ -328,7 +326,7 @@ float random(in vec2 xy) {
 }
 
 vec2 rotate(vec2 v, float cosa, float sina) {
-	return vec2(cosa * v.x - sina * v.y, sina * v.x + cosa * v.y);
+	return vec2(fma(cosa, v.x, - sina * v.y), fma(sina, v.x, cosa * v.y));
 }
 
 // Moves a point around a pivot point.
@@ -354,7 +352,7 @@ vec4 height_blend(vec4 a_value, float a_height, vec4 b_value, float b_height, fl
 vec2 detiling(vec2 uv, vec2 uv_center, int mat_id, inout float normal_rotation){
 	if (_texture_detile_array[mat_id] >= 0.001){
 		uv_center = floor(uv_center) + 0.5;
-		float detile = (random(uv_center) - 0.5) * 2.0 * TAU * _texture_detile_array[mat_id]; // -180deg to 180deg
+		float detile = fma(random(uv_center), 2.0, -1.0) * TAU * _texture_detile_array[mat_id]; // -180deg to 180deg
 		uv = rotate_around(uv, uv_center, detile);
 		// Accumulate total rotation for normal rotation
 		normal_rotation += detile;
@@ -363,9 +361,9 @@ vec2 detiling(vec2 uv, vec2 uv_center, int mat_id, inout float normal_rotation){
 }
 
 vec2 rotate_normal(vec2 normal, float angle) {
-	angle += PI * 0.5;
+	angle = fma(PI, 0.5, angle);
 	float new_y = dot(vec2(cos(angle), sin(angle)), normal);
-	angle -= PI * 0.5;
+	angle = fma(PI, -0.5, angle);
 	float new_x = dot(vec2(cos(angle) ,sin(angle)) ,normal);
 	return vec2(new_x, new_y);
 }
@@ -492,7 +490,7 @@ void get_material(vec2 base_uv, uint control, ivec3 iuv_center, vec3 normal, out
 float blend_weights(float weight, float detail) {
 	weight = smoothstep(0.0, 1.0, weight);
 	weight = sqrt(weight * 0.5);
-	float result = max(0.1 * weight, 10.0 * (weight + detail) + 1.0f - (detail + 10.0));
+	float result = max(0.1 * weight, fma(10.0, (weight + detail), 1.0f - (detail + 10.0)));
 	return result;
 }
 
@@ -502,13 +500,12 @@ void fragment() {
 	vec2 uv2 = UV2 + v_uv2_offset;
 
 	// Calculate Terrain Normals. 4 lookups
-	vec3 w_normal = normalize(v_normal);
-	vec3 w_tangent = normalize(cross(w_normal, vec3(0, 0, 1)));
-	vec3 w_binormal = normalize(cross(w_normal, w_tangent));
+	vec3 w_tangent, w_binormal;
+	vec3 w_normal = get_normal(uv2, w_tangent, w_binormal);
 	NORMAL = mat3(VIEW_MATRIX) * w_normal;
 	TANGENT = mat3(VIEW_MATRIX) * w_tangent;
 	BINORMAL = mat3(VIEW_MATRIX) * w_binormal;
-		
+
 	// Idenfity 4 vertices surrounding this pixel
 	vec2 texel_pos = uv;
 	highp vec2 texel_pos_floor = floor(uv);

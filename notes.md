@@ -83,7 +83,7 @@ This scection is no longer needed as "Unthreaded Web builds and terrain.gdextens
 1. Replace your project's [addons/terrain_3d](/addons/terrain_3d/) with the contents of the zip file
 1. Copy the "libterrain.web.release.wasm32.wasm" (generated above) to your project's "addons/terrain_3d/bin" directory
 1. Open _this_ project in Godot
-1. Set the Render mode (at the top-right) to Compatability and restart Godot
+1. Set the Render mode (at the top-right) to Compatibility and restart Godot
 
 ### Reimporting Textures
 1. Select "Import" (tab next to "Scene")

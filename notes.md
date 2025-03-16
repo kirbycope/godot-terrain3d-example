@@ -101,3 +101,5 @@ This scection is no longer needed as "Unthreaded Web builds and terrain.gdextens
 ### Exporting
 1. Navigate to `%APPDATA%/Godot/export_templates/4.4.stable` and locate "web_dlink_nothreads_debug.zip"
 1. Select "Editor" > "Manage Templates"
+
+https://github.com/TokisanGames/Terrain3D/actions/runs/13877159562

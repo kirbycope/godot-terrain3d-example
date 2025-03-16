@@ -104,5 +104,9 @@ This scection is no longer needed as "Unthreaded Web builds and terrain.gdextens
 	```
 
 ### Exporting
-1. Navigate to `%APPDATA%/Godot/export_templates/4.4.stable` and locate "web_dlink_nothreads_debug.zip"
 1. Select "Editor" > "Manage Templates"
+1. Select "Web (Runnable)"
+1. Toggle on "Advanced Options"
+1. Select the icon next to "Debug"
+1. Navigate to `%APPDATA%/Godot/export_templates/4.4.stable` and locate "web_dlink_nothreads_debug.zip"
+1. Select "Export Project..."

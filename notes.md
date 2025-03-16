@@ -97,9 +97,12 @@ This scection is no longer needed as "Unthreaded Web builds and terrain.gdextens
 1. In the Inspector, expand "Material"
 1. Check "Shader Override Enabled"
 1. Create a New Shader and add the following [working shader](https://github.com/user-attachments/files/17241271/working_shader.txt)
+1. Swap the auto_base_texture and auto_overlay_texture values so that it matches:
+	```
+	uniform int auto_base_texture : hint_range(0, 31) = 0;
+	uniform int auto_overlay_texture : hint_range(0, 31) = 1;
+	```
 
 ### Exporting
 1. Navigate to `%APPDATA%/Godot/export_templates/4.4.stable` and locate "web_dlink_nothreads_debug.zip"
 1. Select "Editor" > "Manage Templates"
-
-https://github.com/TokisanGames/Terrain3D/actions/runs/13877159562
